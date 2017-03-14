@@ -10,6 +10,8 @@ export OMP_NUM_THREADS=28
 pgcc -mp O4 laplace_parallel_omp.c
 ./a.out
 
+![alt tag](https://github.com/rachnasidana28/ParallelProcessing/blob/master/laplace%20equation/images/openMp1.png)
+
 ##Command to run openACC
 pgcc -acc -ta=tesla,cuda8.0 laplace_parallel_acc.c
 ./a.out
