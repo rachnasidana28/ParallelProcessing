@@ -15,6 +15,7 @@ pgcc -mp O4 laplace_parallel_omp.c
   <img src="https://github.com/rachnasidana28/ParallelProcessing/blob/master/Laplace%20Heat%20Equation/laplace%20equation/images/openMp2.png" width="450"/>
   <img src="https://github.com/rachnasidana28/ParallelProcessing/blob/master/Laplace%20Heat%20Equation/laplace%20equation/images/openMp3.png" width="450"/>
 </p>
+
 ### Command to run openACC
 pgcc -acc -ta=tesla,cuda8.0 laplace_parallel_acc.c
 ./a.out
