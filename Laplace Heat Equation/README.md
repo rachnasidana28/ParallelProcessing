@@ -1,4 +1,4 @@
-# ParallelProcessing
+# Parallel Processing - Laplace Heat Equation
 
 --> Laplace Solver with CPU code for openMp and openACC.
 
