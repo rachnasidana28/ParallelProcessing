@@ -1,8 +1,5 @@
-
 // File Name :    OpenAcc.c
-// Course:        CS 6376 Spring 2017
 // Author:        Rachna Sidana
-// Assignment:    Program 3 - Part 2
 // Description:   This program applies openAcc directives to the Floyd Warshall Algorithm and 
 //                calculates the execution time of code that has been parallelized.
 
@@ -41,7 +38,7 @@ return 0;
  * Purpose:   initialize the adjacency matrix
  ------------------------------------------------------------------*/
 void Init_matrix(int ** mat, int n) {
-   int i, j,val;
+  int i, j,val;
 	int INFINTY=n-1;
    for (i = 0; i < n; i++) {
       for (j = 0; j < n; j++)
@@ -54,7 +51,6 @@ void Init_matrix(int ** mat, int n) {
                mat[i][j]= n;
          }
    }
-
 }  
 
 /*-------------------------------------------------------------------
@@ -88,8 +84,8 @@ void Floyd(int ** restrict  arr, int n) {
          		for (j = 0; j < n; j++) {
                  		arr[i][j] =fmin(arr[i][j], arr[i][k] + arr[k][j]);
          }
-  }
-	}
+        }
+	   }
   }  
 } 
  

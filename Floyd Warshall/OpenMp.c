@@ -1,8 +1,5 @@
-
 // File Name :    OpenMp.c
-// Course:        CS 6376 Spring 2017
 // Author:        Rachna Sidana
-// Assignment:    Program 3 - Part 1
 // Description:   This program applies openMp directives to the Floyd Warshall Algorithm and 
 //                calculates the execution time of code that has been parallelized.
 
@@ -54,7 +51,6 @@ void Init_matrix(int** mat, int n) {
                mat[i][j]= n;
          }
    }
-
 }  
 
 /*-------------------------------------------------------------------

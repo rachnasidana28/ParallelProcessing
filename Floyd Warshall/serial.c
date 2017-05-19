@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
@@ -9,29 +8,28 @@ void Floyd(int** mat, int n);
 
 int main(void) {
 int n;
-   struct timeval start_time, stop_time, elapsed_time;  // timers
-
- printf("How many vertices?\n");
-  scanf("%d", &n);
+struct timeval start_time, stop_time, elapsed_time;  // timers
+printf("How many vertices?\n");
+scanf("%d", &n);
 int *arr[n];
-    for (int i=0; i<n; i++)
-         arr[i] = (int *)malloc(n * sizeof(int));
-   printf("the input matrix is:\n %d",sizeof(arr));
+for (int i=0; i<n; i++)
+   arr[i] = (int *)malloc(n * sizeof(int));
+printf("the input matrix is:\n %d",sizeof(arr));
 Init_matrix(arr, n);   
 Print_matrix(arr, n);
   
-   gettimeofday(&start_time,NULL);
-   Floyd(arr, n);
-   gettimeofday(&stop_time,NULL);
-   printf("The solution is:\n");
-   Print_matrix(arr, n);
+gettimeofday(&start_time,NULL);
+Floyd(arr, n);
+gettimeofday(&stop_time,NULL);
+printf("The solution is:\n");
+Print_matrix(arr, n);
 
-   free(mat);
-   timersub(&stop_time, &start_time, &elapsed_time); // Unix time subtract routine
+free(mat);
+timersub(&stop_time, &start_time, &elapsed_time); // Unix time subtract routine
 
-   printf("Total time was %f seconds.\n", elapsed_time.tv_sec+elapsed_time.tv_usec/1000000.0);
+printf("Total time was %f seconds.\n", elapsed_time.tv_sec+elapsed_time.tv_usec/1000000.0);
 
-   return 0;
+return 0;
 }  /* main */
 
 /*-------------------------------------------------------------------
@@ -41,20 +39,19 @@ Print_matrix(arr, n);
  * Out arg:   mat
  */
 void Init_matrix(int** mat, int n) {
-   int i, j,val;
-	int INFINTY=n-1;
-   for (i = 0; i < n; i++) {
-      for (j = 0; j < n; j++)
-         if (i == j)
-            mat[i][j]=0;
-         else {
-            if ((i==j+1)|| (j==i+1)||((i==0)&&(j==n-1))||((i==n-1)&&(j==0)))
-               mat[i][j]=1;
-            else
-               mat[i][j]= n;
-         }
+int i, j,val;
+int INFINTY=n-1;
+for (i = 0; i < n; i++) {
+   for (j = 0; j < n; j++)
+      if (i == j)
+         mat[i][j]=0;
+      else {
+         if ((i==j+1)|| (j==i+1)||((i==0)&&(j==n-1))||((i==n-1)&&(j==0)))
+            mat[i][j]=1;
+         else
+            mat[i][j]= n;
+      }
    }
-
 }  /* Read_matrix */
 
 /*-------------------------------------------------------------------
@@ -63,12 +60,12 @@ void Init_matrix(int** mat, int n) {
  * In args:   mat, n
  */
 void Print_matrix(int**  mat, int n) {
-   int i, j;
+int i, j;
 
-   for (i = 0; i < n; i++) {
-      for (j = 0; j < n; j++)
-            printf("%d ", mat[i][j]);
-      printf("\n");
+for (i = 0; i < n; i++) {
+   for (j = 0; j < n; j++)
+         printf("%d ", mat[i][j]);
+   printf("\n");
    }
 }  /* Print_matrix */
 
@@ -81,14 +78,14 @@ void Print_matrix(int**  mat, int n) {
  *              vertices.
  */
 void Floyd(int**  mat, int n) {
-   int k, i, j, temp;
+int k, i, j, temp;
 
-   for (k = 0; k < n; k++) {
-      for (i = 0; i < n; i++)
-         for (j = 0; j < n; j++) {
-               temp = mat[i][k] + mat[k][j];
-               if (temp < mat[i][j])
-                  mat[i][j] = temp;
-         }
+for (k = 0; k < n; k++) {
+   for (i = 0; i < n; i++)
+      for (j = 0; j < n; j++) {
+            temp = mat[i][k] + mat[k][j];
+            if (temp < mat[i][j])
+               mat[i][j] = temp;
+      }
    }
 }  /* Floyd */

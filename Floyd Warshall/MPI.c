@@ -1,16 +1,11 @@
-
 // File Name :    part3.c
-// Course:        CS 6376 Spring 2017
 // Author:        Rachna Sidana
-// Assignment:    Program 3 - Part 3
 // Description:   This program applies MPI directives to the Floyd Warshall Algorithm and 
 //                calculates the execution time of code that has been parallelized.
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpi.h>
-
-
 void Read_matrix(int local_mat[], int n, int my_rank, int p, MPI_Comm comm);
 void Print_matrix(int local_mat[], int n, int my_rank, int p, MPI_Comm comm);
 void Floyd(int local_mat[], int n, int my_rank, int p, MPI_Comm comm);
@@ -28,31 +23,27 @@ int main(int argc, char* argv[]) {
    comm = MPI_COMM_WORLD;
    MPI_Comm_size(comm, &p);
    MPI_Comm_rank(comm, &my_rank);
-
    if (my_rank == 0) {
       printf("How many vertices?\n");
       scanf("%d", &n);
    }
    MPI_Bcast(&n, 1, MPI_INT, 0, comm);
    local_mat = malloc(n*n/p*sizeof(int));
-
    Read_matrix(local_mat, n, my_rank, p, comm);
    if (my_rank == 0) printf("\n");
-
    MPI_Barrier(MPI_COMM_WORLD);
 	double start = MPI_Wtime();
 	Floyd(local_mat, n, my_rank, p, comm);
 	MPI_Barrier(MPI_COMM_WORLD);
 	double stop = MPI_Wtime();
    if (my_rank == 0){
-   printf("Completed in %f seconds\n" ,stop-start);
-   numFlops = 2.0f*n*n*n/1000000000.0f;
-   gflops = numFlops/(stop-start);
-   printf("GFlops :  %f .\n",gflops);  
-}
+      printf("Completed in %f seconds\n" ,stop-start);
+      numFlops = 2.0f*n*n*n/1000000000.0f;
+      gflops = numFlops/(stop-start);
+      printf("GFlops :  %f .\n",gflops);  
+   }
 	free(local_mat);
    MPI_Finalize();
-
    return 0;
 }  
 
@@ -66,8 +57,7 @@ void Read_matrix(int local_mat[], int n, int my_rank, int p, MPI_Comm comm) {
 int i, j;
 int* temp_mat = NULL;
 if (my_rank == 0) {
-   temp_mat = malloc(n*n*sizeof(int));
-      
+   temp_mat = malloc(n*n*sizeof(int));      
 for (i = 0; i < n; i++) {
    for (j = 0; j < n; j++)
       if (i == j)
@@ -78,14 +68,14 @@ for (i = 0; i < n; i++) {
 		    else
         	   temp_mat[i*n+j]=n; 
 	        }
-         }
+}
 MPI_Scatter(temp_mat, n*n/p, MPI_INT, local_mat, n*n/p, MPI_INT, 0, comm);
-      free(temp_mat);
-   } else {
+free(temp_mat);
+} 
+else {
       MPI_Scatter(temp_mat, n*n/p, MPI_INT, 
                   local_mat, n*n/p, MPI_INT, 0, comm);
    }
-
 }  
 
 
@@ -93,8 +83,7 @@ MPI_Scatter(temp_mat, n*n/p, MPI_INT, local_mat, n*n/p, MPI_INT, 0, comm);
  Function:  Print_matrix
  Purpose:   Gather the distributed matrix onto process 0 and print it.
  --------------------------------------------------------------------*/
-void Print_matrix(int local_mat[], int n, int my_rank, int p, 
-      MPI_Comm comm) {
+void Print_matrix(int local_mat[], int n, int my_rank, int p, MPI_Comm comm) {
 int i, j;
 int* temp_mat = NULL;
 if (my_rank == 0) {
@@ -122,10 +111,8 @@ void Floyd(int local_mat[], int n, int my_rank, int p, MPI_Comm comm) {
    int global_k, local_i, global_j, temp;
    int root;
    int* row_k = malloc(n*sizeof(int));
-
    for (global_k = 0; global_k < n; global_k++) {
 	root = Owner(global_k, p, n);
-
 	 if (my_rank == root)
          Copy_row(local_mat, n, p, row_k, global_k);
 	MPI_Bcast(row_k, n, MPI_INT, root, MPI_COMM_WORLD);
@@ -135,7 +122,6 @@ void Floyd(int local_mat[], int n, int my_rank, int p, MPI_Comm comm) {
                if (temp < local_mat[local_i*n+global_j])
                   local_mat[local_i*n + global_j] = temp;
          }
-
    }
    free(row_k);
 }  
@@ -155,7 +141,6 @@ Purpose:   Copy the row with *global* subscript k into row_k
 void Copy_row(int local_mat[], int n, int p, int row_k[], int k) {
    int j;
    int local_k = k % (n/p);
-
    for (j = 0; j < n; j++)
       row_k[j] = local_mat[local_k*n + j];
 }  
